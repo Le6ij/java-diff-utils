@@ -268,6 +268,20 @@ public class MyersDiff<T> implements DiffAlgorithm<T> {
             if (path.isSnake())
                 path = path.prev;
         }
+        for(Integer i = patch.getDeltas().size() - 1; i > -1; --i) {
+            Delta var12 = (Delta)patch.getDeltas().get(i);
+            if(((Delta)patch.getDeltas().get(i)).getType().equals(Delta.TYPE.INSERT)) {
+                for(Integer j = patch.getDeltas().size() - 1; j > -1; --j) {
+                    Delta var13 = (Delta)patch.getDeltas().get(j);
+                    if(var13.getType().equals(Delta.TYPE.DELETE) && ((Delta)patch.getDeltas().get(i)).getRevised().getLines().equals(((Delta)patch.getDeltas().get(j)).getOriginal().getLines())) {
+                        patch.addDelta(new MoveDelta(var12.getOriginal(), var12.getRevised()));
+                        patch.addDelta(new MoveDelta(var13.getOriginal(), var13.getRevised()));
+                        patch.removeDelta(var12);
+                        patch.removeDelta(var13);
+                    }
+                }
+            }
+        }
         return patch;
     }
 

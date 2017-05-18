@@ -20,8 +20,6 @@ import java.util.*;
 /**
  * Describes the delta between original and revised texts.
  * 
- * @author <a href="dm.naumenko@gmail.com">Dmitry Naumenko</a>
- * @param T The type of the compared elements in the 'lines'.
  */
 public abstract class Delta<T> {
 	
@@ -41,7 +39,9 @@ public abstract class Delta<T> {
         /** A delete from the original. */
         DELETE, 
         /** An insert into the original. */
-        INSERT
+        INSERT,
+        /** A move compared to the original. */
+        MOVE
     }
     
     /**
